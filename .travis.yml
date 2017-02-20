@@ -18,24 +18,23 @@
 # #L%
 ###
 
-# EditorConfig: http://EditorConfig.org
+language: java
+jdk:
+  - oraclejdk8
 
-# Top-most EditorConfig file
-root = true
+before_cache:
+  - rm --force --recursive --verbose $HOME/.m2/repository/com/gantsign/restrulz
 
-# Defaults for all editor files
-[*]
-insert_final_newline = true
-indent_style = space
-indent_size = 4
-continuation_indent_size = 8
-trim_trailing_whitespace = true
+cache:
+  directories:
+    - ~/.m2
 
-# Files with a smaller indent
-[*.{java,xml}]
-indent_size = 2
-continuation_indent_size = 4
+script: ./mvnw clean install site --batch-mode --show-version
 
-# File encoding
-[*.{kt,java}]
-charset = utf-8
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+branches:
+  only:
+    - master
+    - /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)([\.\-].*)?$/
