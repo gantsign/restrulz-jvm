@@ -27,7 +27,7 @@ before_cache:
 
 cache:
   directories:
-    - ~/.m2
+    - $HOME/.m2
 
 script: ./mvnw clean install site --batch-mode --show-version
 
