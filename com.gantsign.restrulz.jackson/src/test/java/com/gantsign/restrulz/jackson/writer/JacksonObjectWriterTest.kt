@@ -111,6 +111,102 @@ class JacksonObjectWriterTest {
     }
 
     @Test
+    fun testWriteStringArrayField() {
+        val generator = mock(JsonGenerator::class.java)
+        val testWriter = object : JacksonObjectWriter<String>() {
+            override fun writeObject(generator: JsonGenerator, value: String?) {
+                generator.writeStringArrayField("test1", listOf("test2", "test3"))
+            }
+        }
+        testWriter.writeObject(generator, null)
+        verify(generator).writeFieldName("test1")
+        verify(generator).writeStartArray(2)
+        verify(generator).writeString("test2")
+        verify(generator).writeString("test3")
+        verify(generator).writeEndArray()
+    }
+
+    @Test
+    fun testWriteBooleanArrayField() {
+        val generator = mock(JsonGenerator::class.java)
+        val testWriter = object : JacksonObjectWriter<String>() {
+            override fun writeObject(generator: JsonGenerator, value: String?) {
+                generator.writeBooleanArrayField("test1", listOf(true, false))
+            }
+        }
+        testWriter.writeObject(generator, null)
+        verify(generator).writeFieldName("test1")
+        verify(generator).writeStartArray(2)
+        verify(generator).writeBoolean(true)
+        verify(generator).writeBoolean(false)
+        verify(generator).writeEndArray()
+    }
+
+    @Test
+    fun testWriteByteArrayField() {
+        val generator = mock(JsonGenerator::class.java)
+        val testWriter = object : JacksonObjectWriter<String>() {
+            override fun writeObject(generator: JsonGenerator, value: String?) {
+                generator.writeByteArrayField("test1", listOf(1, 2))
+            }
+        }
+        testWriter.writeObject(generator, null)
+        verify(generator).writeFieldName("test1")
+        verify(generator).writeStartArray(2)
+        verify(generator).writeNumber(1)
+        verify(generator).writeNumber(2)
+        verify(generator).writeEndArray()
+    }
+
+    @Test
+    fun testWriteShortArrayField() {
+        val generator = mock(JsonGenerator::class.java)
+        val testWriter = object : JacksonObjectWriter<String>() {
+            override fun writeObject(generator: JsonGenerator, value: String?) {
+                generator.writeShortArrayField("test1", listOf(1, 2))
+            }
+        }
+        testWriter.writeObject(generator, null)
+        verify(generator).writeFieldName("test1")
+        verify(generator).writeStartArray(2)
+        verify(generator).writeNumber(1.toShort())
+        verify(generator).writeNumber(2.toShort())
+        verify(generator).writeEndArray()
+    }
+
+    @Test
+    fun testWriteIntArrayField() {
+        val generator = mock(JsonGenerator::class.java)
+        val testWriter = object : JacksonObjectWriter<String>() {
+            override fun writeObject(generator: JsonGenerator, value: String?) {
+                generator.writeIntArrayField("test1", listOf(1, 2))
+            }
+        }
+        testWriter.writeObject(generator, null)
+        verify(generator).writeFieldName("test1")
+        verify(generator).writeStartArray(2)
+        verify(generator).writeNumber(1)
+        verify(generator).writeNumber(2)
+        verify(generator).writeEndArray()
+    }
+
+    @Test
+    fun testWriteLongArrayField() {
+        val generator = mock(JsonGenerator::class.java)
+        val testWriter = object : JacksonObjectWriter<String>() {
+            override fun writeObject(generator: JsonGenerator, value: String?) {
+                generator.writeLongArrayField("test1", listOf(1, 2))
+            }
+        }
+        testWriter.writeObject(generator, null)
+        verify(generator).writeFieldName("test1")
+        verify(generator).writeStartArray(2)
+        verify(generator).writeNumber(1L)
+        verify(generator).writeNumber(2L)
+        verify(generator).writeEndArray()
+    }
+
+    @Test
     fun testWriteObjectField() {
         val generator = mock(JsonGenerator::class.java)
         var called = false

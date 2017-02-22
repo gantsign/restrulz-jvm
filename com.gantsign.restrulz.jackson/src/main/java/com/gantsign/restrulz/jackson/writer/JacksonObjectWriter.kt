@@ -132,6 +132,156 @@ abstract class JacksonObjectWriter<in T> : JsonObjectWriter<T> {
     }
 
     /**
+     * Convenience method for outputting a field entry ("member")
+     * that has the specified array value. Equivalent to:
+     *
+     * ```
+     * writeFieldName(fieldName)
+     * writeStartArray(values.size)
+     * for (value in values) {
+     *   writeString(value)
+     * }
+     * writeEndArray()
+     * ```
+     *
+     * @param fieldName the name of the field being written out.
+     * @param values the values to write out.
+     */
+    protected fun JsonGenerator.writeStringArrayField(fieldName: String, values: List<String>) {
+        writeFieldName(fieldName)
+        writeStartArray(values.size)
+        for (value in values) {
+            writeString(value)
+        }
+        writeEndArray()
+    }
+
+    /**
+     * Convenience method for outputting a field entry ("member")
+     * that has the specified array value. Equivalent to:
+     *
+     * ```
+     * writeFieldName(fieldName)
+     * writeStartArray(values.size)
+     * for (value in values) {
+     *   writeBoolean(value)
+     * }
+     * writeEndArray()
+     * ```
+     *
+     * @param fieldName the name of the field being written out.
+     * @param values the values to write out.
+     */
+    protected fun JsonGenerator.writeBooleanArrayField(fieldName: String, values: List<Boolean>) {
+        writeFieldName(fieldName)
+        writeStartArray(values.size)
+        for (value in values) {
+            writeBoolean(value)
+        }
+        writeEndArray()
+    }
+
+    /**
+     * Convenience method for outputting a field entry ("member")
+     * that has the specified array value. Equivalent to:
+     *
+     * ```
+     * writeFieldName(fieldName)
+     * writeStartArray(values.size)
+     * for (value in values) {
+     *   writeNumber(value)
+     * }
+     * writeEndArray()
+     * ```
+     *
+     * @param fieldName the name of the field being written out.
+     * @param values the values to write out.
+     */
+    protected fun JsonGenerator.writeByteArrayField(fieldName: String, values: List<Byte>) {
+        writeFieldName(fieldName)
+        writeStartArray(values.size)
+        for (value in values) {
+            writeNumber(value.toInt())
+        }
+        writeEndArray()
+    }
+
+    /**
+     * Convenience method for outputting a field entry ("member")
+     * that has the specified array value. Equivalent to:
+     *
+     * ```
+     * writeFieldName(fieldName)
+     * writeStartArray(values.size)
+     * for (value in values) {
+     *   writeNumber(value)
+     * }
+     * writeEndArray()
+     * ```
+     *
+     * @param fieldName the name of the field being written out.
+     * @param values the values to write out.
+     */
+    protected fun JsonGenerator.writeShortArrayField(fieldName: String, values: List<Short>) {
+        writeFieldName(fieldName)
+        writeStartArray(values.size)
+        for (value in values) {
+            writeNumber(value)
+        }
+        writeEndArray()
+    }
+
+    /**
+     * Convenience method for outputting a field entry ("member")
+     * that has the specified array value. Equivalent to:
+     *
+     * ```
+     * writeFieldName(fieldName)
+     * writeStartArray(values.size)
+     * for (value in values) {
+     *   writeNumber(value)
+     * }
+     * writeEndArray()
+     * ```
+     *
+     * @param fieldName the name of the field being written out.
+     * @param values the values to write out.
+     */
+    protected fun JsonGenerator.writeIntArrayField(fieldName: String, values: List<Int>) {
+        writeFieldName(fieldName)
+        writeStartArray(values.size)
+        for (value in values) {
+            writeNumber(value)
+        }
+        writeEndArray()
+    }
+
+    /**
+     * Convenience method for outputting a field entry ("member")
+     * that has the specified array value. Equivalent to:
+     *
+     * ```
+     * writeFieldName(fieldName)
+     * writeStartArray(values.size)
+     * for (value in values) {
+     *   writeNumber(value)
+     * }
+     * writeEndArray()
+     * ```
+     *
+     * @param fieldName the name of the field being written out.
+     * @param values the values to write out.
+     */
+    protected fun JsonGenerator.writeLongArrayField(fieldName: String, values: List<Long>) {
+        writeFieldName(fieldName)
+        writeStartArray(values.size)
+        for (value in values) {
+            writeNumber(value)
+        }
+        writeEndArray()
+    }
+
+    /**
      * Writes the specified object to the specified [JsonGenerator].
      *
      * @param generator the low level API for writing JSON.
