@@ -34,10 +34,13 @@
     <module>com.gantsign.restrulz.validation</module>
     <module>com.gantsign.restrulz.json</module>
     <module>com.gantsign.restrulz.jackson</module>
+    <module>com.gantsign.restrulz.spring.mvc</module>
   </modules>
 
   <properties>
     <dependencies.kotlin.version>1.1.0-rc-91</dependencies.kotlin.version>
+    <dependencies.spring-boot.version>1.5.1.RELEASE</dependencies.spring-boot.version>
+    <dependencies.spring.version>4.3.6.RELEASE</dependencies.spring.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -52,9 +55,54 @@
         <version>2.8.6</version>
       </dependency>
       <dependency>
+        <groupId>io.reactivex.rxjava2</groupId>
+        <artifactId>rxjava</artifactId>
+        <version>2.0.6</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>3.1.0</version>
+      </dependency>
+      <dependency>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-stdlib</artifactId>
         <version>${dependencies.kotlin.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>${dependencies.spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${dependencies.spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${dependencies.spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>${dependencies.spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>${dependencies.spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot</artifactId>
+        <version>${dependencies.spring-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-autoconfigure</artifactId>
+        <version>${dependencies.spring-boot.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jetbrains</groupId>
@@ -63,9 +111,27 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
+        <groupId>com.jayway.jsonpath</groupId>
+        <artifactId>json-path</artifactId>
+        <version>2.2.0</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.12</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-core</artifactId>
+        <version>1.3</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -78,6 +144,18 @@
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
         <version>2.7.10</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>${dependencies.spring.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-test-autoconfigure</artifactId>
+        <version>${dependencies.spring-boot.version}</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
@@ -211,6 +289,8 @@
             <configuration>
               <failOnWarning>true</failOnWarning>
               <ignoredDependencies>
+                <ignoredDependency>com.jayway.jsonpath:json-path</ignoredDependency>
+                <ignoredDependency>javax.servlet:javax.servlet-api</ignoredDependency>
                 <ignoredDependency>org.jetbrains.kotlin:kotlin-test</ignoredDependency>
                 <ignoredDependency>org.jetbrains.kotlin:kotlin-test-junit</ignoredDependency>
               </ignoredDependencies>

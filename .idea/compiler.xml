@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="com.gantsign.restrulz.jackson" />
         <module name="com.gantsign.restrulz.json" />
+        <module name="com.gantsign.restrulz.spring.mvc" />
         <module name="com.gantsign.restrulz.validation" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="com.gantsign.restrulz.jackson" target="1.8" />
       <module name="com.gantsign.restrulz.json" target="1.8" />
+      <module name="com.gantsign.restrulz.spring.mvc" target="1.8" />
       <module name="com.gantsign.restrulz.validation" target="1.8" />
       <module name="restrulz-parent" target="1.8" />
     </bytecodeTargetLevel>
