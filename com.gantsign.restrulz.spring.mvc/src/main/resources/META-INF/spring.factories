@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.gantsign.restrulz.spring.mvc.RestrulzAutoConfiguration

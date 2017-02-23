@@ -41,6 +41,7 @@
 *.java text
 *.kt text
 *.gradle text
+org.mockito.plugins.MockMaker text
 
 # Declare files that will always have CRLF line endings on checkout.
 *.bat text eol=crlf

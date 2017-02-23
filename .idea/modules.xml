@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/com.gantsign.restrulz.jackson/com.gantsign.restrulz.jackson.iml" filepath="$PROJECT_DIR$/com.gantsign.restrulz.jackson/com.gantsign.restrulz.jackson.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.gantsign.restrulz.json/com.gantsign.restrulz.json.iml" filepath="$PROJECT_DIR$/com.gantsign.restrulz.json/com.gantsign.restrulz.json.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.gantsign.restrulz.spring.mvc/com.gantsign.restrulz.spring.mvc.iml" filepath="$PROJECT_DIR$/com.gantsign.restrulz.spring.mvc/com.gantsign.restrulz.spring.mvc.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.gantsign.restrulz.validation/com.gantsign.restrulz.validation.iml" filepath="$PROJECT_DIR$/com.gantsign.restrulz.validation/com.gantsign.restrulz.validation.iml" />
       <module fileurl="file://$PROJECT_DIR$/restrulz-parent.iml" filepath="$PROJECT_DIR$/restrulz-parent.iml" />
     </modules>
