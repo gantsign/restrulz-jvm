@@ -39,7 +39,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 
-
 @RunWith(SpringRunner::class)
 @WebMvcTest(TestApi::class)
 class SingleReturnValueHandlerMvcTest {
@@ -58,7 +57,7 @@ class SingleReturnValueHandlerMvcTest {
 
     @Before
     fun setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
+        mvc = MockMvcBuilders.webAppContextSetup(context).build()
     }
 
     @Test
@@ -69,7 +68,7 @@ class SingleReturnValueHandlerMvcTest {
                 .andReturn()
 
         mvc.perform(asyncDispatch(mvcResult))
-                .andExpect(status().isPartialContent())
+                .andExpect(status().isPartialContent)
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").value(testApi.singleWithResponseEntityBody))
     }
@@ -82,7 +81,7 @@ class SingleReturnValueHandlerMvcTest {
                 .andReturn()
 
         mvc.perform(asyncDispatch(mvcResult))
-                .andExpect(status().isPartialContent())
+                .andExpect(status().isPartialContent)
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").value(testApi.singleWithRestrulzResponseBody))
     }
@@ -95,7 +94,7 @@ class SingleReturnValueHandlerMvcTest {
                 .andReturn()
 
         mvc.perform(asyncDispatch(mvcResult))
-                .andExpect(status().isOk())
+                .andExpect(status().isOk)
                 .andExpect(content().contentType("text/plain;charset=UTF-8"))
                 .andExpect(jsonPath("$").value(testApi.singleWithAnyBody))
     }
@@ -108,7 +107,7 @@ class SingleReturnValueHandlerMvcTest {
                 .andReturn()
 
         mvc.perform(asyncDispatch(mvcResult))
-                .andExpect(status().isPartialContent())
+                .andExpect(status().isPartialContent)
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").value(testApi.responseEntityWithSingleBody))
     }
