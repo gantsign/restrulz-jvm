@@ -31,6 +31,9 @@ import org.springframework.web.context.request.async.WebAsyncUtils
 import org.springframework.web.method.support.AsyncHandlerMethodReturnValueHandler
 import org.springframework.web.method.support.ModelAndViewContainer
 
+/**
+ * A [AsyncHandlerMethodReturnValueHandler] implementation for [Single].
+ */
 class SingleReturnValueHandler : AsyncHandlerMethodReturnValueHandler {
 
     private fun isSingle(returnType: MethodParameter): Boolean {

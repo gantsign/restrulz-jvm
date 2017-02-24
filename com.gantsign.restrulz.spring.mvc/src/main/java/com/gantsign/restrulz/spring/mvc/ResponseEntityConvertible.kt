@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,8 +21,18 @@ package com.gantsign.restrulz.spring.mvc
 
 import org.springframework.http.ResponseEntity
 
+/**
+ * Interface for objects that can be converted to [ResponseEntity].
+ *
+ * @param T the type of the body of the [ResponseEntity].
+ */
 interface ResponseEntityConvertible<T> {
 
+    /**
+     * Returns this object converted to a [ResponseEntity].
+     *
+     * @return a [ResponseEntity] representing the value of this object.
+     */
     fun toResponseEntity(): ResponseEntity<T>
 
 }
