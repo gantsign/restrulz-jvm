@@ -19,12 +19,17 @@
  */
 package com.gantsign.restrulz.spring.mvc
 
+import com.gantsign.restrulz.spring.mvc.model.TestEntity
+import com.gantsign.restrulz.spring.mvc.responses.StringResponse
+import com.gantsign.restrulz.spring.mvc.responses.TestEntityListResponse
+import com.gantsign.restrulz.spring.mvc.responses.TestEntityResponse
 import io.reactivex.Single
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
@@ -38,14 +43,22 @@ open class TestApi {
     val headers = HttpHeaders()
 
     val singleWithResponseEntityBody = "singleWithResponseEntity"
-    val singleWithRestrulzResponseBody = "singleWithRestrulzResponse"
+    val singleWithStringResponseBody = "singleWithStringResponse"
+    val singleWithTestEntityResponseBody = "singleWithTestEntityResponse"
+    val singleWithTestEntityListResponseBody
+            = "singleWithTestEntityListResponse"
+    val singleWithTestEntityListResponseBody2
+            = "singleWithTestEntityListResponse2"
     val singleWithAnyBody = "singleWithAny"
     val responseEntityWithSingleBody = "responseEntityWithSingle"
     val responseEntityWithStringBody = "responseEntityWithString"
     val stringBody = "string"
+    val testEntityBody = "testEntity"
+    val listOfTestEntityBody = "listOfTestEntity"
+    val listOfTestEntityBody2 = "listOfTestEntity2"
 
     val singleWithResponseEntity: Single<ResponseEntity<*>>
-    val singleWithRestrulzResponse: Single<RestrulzResponse>
+    val singleWithStringResponse: Single<StringResponse>
     val singleWithAny: Single<Any>
     val responseEntityWithSingle: ResponseEntity<Single<String>>
     val responseEntityWithString = ResponseEntity(
@@ -57,8 +70,8 @@ open class TestApi {
 
         singleWithResponseEntity = Single.just(ResponseEntity(
                 singleWithResponseEntityBody, headers, HttpStatus.PARTIAL_CONTENT))
-        singleWithRestrulzResponse = Single.just(object : RestrulzResponse(
-                HttpStatus.PARTIAL_CONTENT, headers, singleWithRestrulzResponseBody) {})
+        singleWithStringResponse = Single.just(
+                StringResponse.partialContent(singleWithStringResponseBody))
         singleWithAny = Single.just(singleWithAnyBody)
         responseEntityWithSingle = ResponseEntity(
                 Single.just(responseEntityWithSingleBody), headers, HttpStatus.PARTIAL_CONTENT)
@@ -69,9 +82,21 @@ open class TestApi {
         return singleWithResponseEntity
     }
 
-    @RequestMapping(value = "/singleWithRestrulzResponse", method = arrayOf(RequestMethod.GET))
-    fun singleWithRestrulzResponse(): Single<RestrulzResponse> {
-        return singleWithRestrulzResponse
+    @RequestMapping(value = "/singleWithStringResponse", method = arrayOf(RequestMethod.GET))
+    fun singleWithStringResponse(): Single<StringResponse> {
+        return singleWithStringResponse
+    }
+
+    @RequestMapping(value = "/singleWithTestEntityResponse", method = arrayOf(RequestMethod.POST))
+    fun singleWithTestEntityResponse(
+            @RequestBody testEntity: TestEntity): Single<TestEntityResponse> {
+        return Single.just(TestEntityResponse.partialContent(testEntity))
+    }
+
+    @RequestMapping(value = "/singleWithTestEntityListResponse", method = arrayOf(RequestMethod.POST))
+    fun singleWithTestEntityListResponse(
+            @RequestBody testEntities: List<TestEntity>): Single<TestEntityListResponse> {
+        return Single.just(TestEntityListResponse.partialContent(testEntities))
     }
 
     @RequestMapping(value = "/singleWithAny", method = arrayOf(RequestMethod.GET))
@@ -92,5 +117,15 @@ open class TestApi {
     @RequestMapping(value = "/string", method = arrayOf(RequestMethod.GET))
     fun string(): String {
         return string
+    }
+
+    @RequestMapping(value = "/testEntity", method = arrayOf(RequestMethod.POST))
+    fun testEntity(@RequestBody testEntity: TestEntity): TestEntity {
+        return testEntity
+    }
+
+    @RequestMapping(value = "/listOfTestEntity", method = arrayOf(RequestMethod.POST))
+    fun listOfTestEntity(@RequestBody testEntities: List<TestEntity>): List<TestEntity> {
+        return testEntities
     }
 }

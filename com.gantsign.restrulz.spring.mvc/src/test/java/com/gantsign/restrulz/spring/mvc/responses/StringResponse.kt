@@ -17,25 +17,28 @@
  * limitations under the License.
  * #L%
  */
-package com.gantsign.restrulz.spring.mvc
+package com.gantsign.restrulz.spring.mvc.responses
 
+import com.gantsign.restrulz.spring.mvc.ResponseEntityConvertible
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 
-/**
- * Base class for code REST API responses.
- *
- * @constructor Constructs a response instance with the specified response details.
- * @param statusCode the HTTP status code for this response.
- * @param headers the HTTP response headers.
- * @param body the body of the HTTP response.
- */
-abstract class RestrulzResponse(val statusCode: HttpStatus,
-                                val headers: HttpHeaders,
-                                val body: Any?) : ResponseEntityConvertible<Any?> {
+class StringResponse private constructor(
+        private val responseEntity: ResponseEntity<Any?>) : ResponseEntityConvertible<Any?> {
 
     override fun toResponseEntity(): ResponseEntity<Any?> {
-        return ResponseEntity(body, headers, statusCode)
+        return responseEntity
+    }
+
+    companion object {
+        fun partialContent(value: String): StringResponse {
+            val headers = HttpHeaders()
+            headers.contentType = MediaType.APPLICATION_JSON
+
+            return StringResponse(
+                    ResponseEntity<Any?>(value, headers, HttpStatus.PARTIAL_CONTENT))
+        }
     }
 }

@@ -27,11 +27,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.context.annotation.ComponentScan
-import org.springframework.http.MediaType
+import org.springframework.http.MediaType.APPLICATION_JSON
+import org.springframework.http.MediaType.APPLICATION_JSON_UTF8
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.asyncDispatch
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.request
@@ -69,21 +71,56 @@ class SingleReturnValueHandlerMvcTest {
 
         mvc.perform(asyncDispatch(mvcResult))
                 .andExpect(status().isPartialContent)
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$").value(testApi.singleWithResponseEntityBody))
     }
 
     @Test
-    fun testHandleReturnValueSingleWithRestrulzResponse() {
-        val mvcResult = mvc.perform(get("/singleWithRestrulzResponse"))
+    fun testHandleReturnValueSingleWithStringResponse() {
+        val mvcResult = mvc.perform(get("/singleWithStringResponse"))
                 .andExpect(request().asyncStarted())
                 .andExpect(request().asyncResult(notNullValue()))
                 .andReturn()
 
         mvc.perform(asyncDispatch(mvcResult))
                 .andExpect(status().isPartialContent)
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$").value(testApi.singleWithRestrulzResponseBody))
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$").value(testApi.singleWithStringResponseBody))
+    }
+
+    @Test
+    fun testHandleReturnValueSingleWithTestEntityResponse() {
+        val request = post("/singleWithTestEntityResponse")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content("{\"id\":\"${testApi.singleWithTestEntityResponseBody}\"}")
+
+        val mvcResult = mvc.perform(request)
+                .andExpect(request().asyncStarted())
+                .andExpect(request().asyncResult(notNullValue()))
+                .andReturn()
+
+        mvc.perform(asyncDispatch(mvcResult))
+                .andExpect(status().isPartialContent)
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.id").value(testApi.singleWithTestEntityResponseBody))
+    }
+
+    @Test
+    fun testHandleReturnValueSingleWithTestEntityListResponse() {
+        val request = post("/singleWithTestEntityListResponse")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content("[{\"id\":\"${testApi.singleWithTestEntityListResponseBody}\"},{\"id\":\"${testApi.singleWithTestEntityListResponseBody2}\"}]")
+
+        val mvcResult = mvc.perform(request)
+                .andExpect(request().asyncStarted())
+                .andExpect(request().asyncResult(notNullValue()))
+                .andReturn()
+
+        mvc.perform(asyncDispatch(mvcResult))
+                .andExpect(status().isPartialContent)
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].id").value(testApi.singleWithTestEntityListResponseBody))
+                .andExpect(jsonPath("$[1].id").value(testApi.singleWithTestEntityListResponseBody2))
     }
 
     @Test
@@ -108,7 +145,30 @@ class SingleReturnValueHandlerMvcTest {
 
         mvc.perform(asyncDispatch(mvcResult))
                 .andExpect(status().isPartialContent)
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$").value(testApi.responseEntityWithSingleBody))
+    }
+
+    @Test
+    fun testHandleReturnValueTestEntity() {
+        val request = post("/testEntity")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content("{\"id\":\"${testApi.testEntityBody}\"}")
+        mvc.perform(request)
+                .andExpect(status().isOk)
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.id").value(testApi.testEntityBody))
+    }
+
+    @Test
+    fun testHandleReturnValueListOfTestEntity() {
+        val request = post("/listOfTestEntity")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content("[{\"id\":\"${testApi.listOfTestEntityBody}\"},{\"id\":\"${testApi.listOfTestEntityBody2}\"}]")
+        mvc.perform(request)
+                .andExpect(status().isOk)
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$[0].id").value(testApi.listOfTestEntityBody))
+                .andExpect(jsonPath("$[1].id").value(testApi.listOfTestEntityBody2))
     }
 }
