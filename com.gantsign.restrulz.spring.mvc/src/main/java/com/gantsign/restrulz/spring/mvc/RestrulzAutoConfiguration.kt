@@ -24,6 +24,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.web.method.support.AsyncHandlerMethodReturnValueHandler
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
@@ -51,6 +52,21 @@ open class RestrulzAutoConfiguration {
 
                 override fun addReturnValueHandlers(returnValueHandlers: MutableList<HandlerMethodReturnValueHandler>) {
                     returnValueHandlers.add(singleReturnValueHandler)
+                }
+            }
+        }
+
+        @Bean
+        open fun restrulzMessageConverter(): RestrulzMessageConverter {
+            return RestrulzMessageConverter()
+        }
+
+        @Bean
+        open fun restrulzMvcConfiguration(restrulzMessageConverter: RestrulzMessageConverter): WebMvcConfigurerAdapter {
+            return object : WebMvcConfigurerAdapter() {
+
+                override fun configureMessageConverters(converters: MutableList<HttpMessageConverter<*>>) {
+                    converters.add(restrulzMessageConverter)
                 }
             }
         }

@@ -19,6 +19,7 @@
  */
 package com.gantsign.restrulz.spring.mvc
 
+import com.gantsign.restrulz.spring.mvc.responses.StringResponse
 import io.reactivex.Single
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -61,14 +62,14 @@ class SingleReturnValueHandlerTest {
     private lateinit var headers: HttpHeaders
 
     private lateinit var singleWithResponseEntity: Single<ResponseEntity<*>>
-    private lateinit var singleWithRestrulzResponse: Single<RestrulzResponse>
+    private lateinit var singleWithStringResponse: Single<StringResponse>
     private lateinit var singleWithAny: Single<Any>
     private lateinit var responseEntityWithSingle: ResponseEntity<Single<String>>
     private val responseEntityWithString = ResponseEntity(testValue, HttpStatus.PARTIAL_CONTENT)
     private val string = testValue
 
     private var singleWithResponseEntityMp = getMethodParameter("singleWithResponseEntity")
-    private val singleWithRestrulzResponseMp = getMethodParameter("singleWithRestrulzResponse")
+    private val singleWithRestrulzResponseMp = getMethodParameter("singleWithStringResponse")
     private val singleWithAnyMp = getMethodParameter("singleWithAny")
     private val responseEntityWithSingleMp = getMethodParameter("responseEntityWithSingle")
     private val responseEntityWithStringMp = getMethodParameter("responseEntityWithString")
@@ -89,8 +90,7 @@ class SingleReturnValueHandlerTest {
 
         singleWithResponseEntity = Single.just(ResponseEntity(
                 testValue, headers, HttpStatus.PARTIAL_CONTENT))
-        singleWithRestrulzResponse = Single.just(object : RestrulzResponse(
-                HttpStatus.PARTIAL_CONTENT, headers, testValue) {})
+        singleWithStringResponse = Single.just(StringResponse.partialContent(testValue))
         singleWithAny = Single.just(testValue)
         responseEntityWithSingle = ResponseEntity(
                 Single.just(testValue), headers, HttpStatus.PARTIAL_CONTENT)
@@ -110,7 +110,7 @@ class SingleReturnValueHandlerTest {
     @Test
     fun testIsAsyncReturnValue() {
         val returnValueHandler = SingleReturnValueHandler()
-        assertTrue(returnValueHandler.isAsyncReturnValue(singleWithRestrulzResponse, singleWithRestrulzResponseMp))
+        assertTrue(returnValueHandler.isAsyncReturnValue(singleWithStringResponse, singleWithRestrulzResponseMp))
         assertTrue(returnValueHandler.isAsyncReturnValue(singleWithAny, singleWithAnyMp))
         assertTrue(returnValueHandler.isAsyncReturnValue(responseEntityWithSingle, responseEntityWithSingleMp))
 
@@ -149,7 +149,7 @@ class SingleReturnValueHandlerTest {
     }
 
     @Test
-    fun testHandleReturnValueSingleWithRestrulzResponse() {
+    fun testHandleReturnValueSingleWithStringResponse() {
         val returnValueHandler = SingleReturnValueHandler()
         val mavContainer = mock(ModelAndViewContainer::class.java)
         val webRequest = mock(NativeWebRequest::class.java)
@@ -158,7 +158,7 @@ class SingleReturnValueHandlerTest {
                 .thenReturn(webAsyncManager)
 
         returnValueHandler.handleReturnValue(
-                singleWithRestrulzResponse,
+                singleWithStringResponse,
                 singleWithRestrulzResponseMp,
                 mavContainer,
                 webRequest)
