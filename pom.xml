@@ -41,6 +41,7 @@
     <dependencies.kotlin.version>1.1.0</dependencies.kotlin.version>
     <dependencies.spring-boot.version>1.5.1.RELEASE</dependencies.spring-boot.version>
     <dependencies.spring.version>4.3.6.RELEASE</dependencies.spring.version>
+    <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -66,7 +67,7 @@
       </dependency>
       <dependency>
         <groupId>org.jetbrains.kotlin</groupId>
-        <artifactId>kotlin-stdlib</artifactId>
+        <artifactId>kotlin-stdlib-jre8</artifactId>
         <version>${dependencies.kotlin.version}</version>
       </dependency>
       <dependency>
@@ -298,6 +299,8 @@
                 <ignoredDependency>javax.servlet:javax.servlet-api</ignoredDependency>
                 <ignoredDependency>org.jetbrains.kotlin:kotlin-test</ignoredDependency>
                 <ignoredDependency>org.jetbrains.kotlin:kotlin-test-junit</ignoredDependency>
+                <ignoredDependency>org.jetbrains.kotlin:kotlin-stdlib</ignoredDependency>
+                <ignoredDependency>org.jetbrains.kotlin:kotlin-stdlib-jre8</ignoredDependency>
               </ignoredDependencies>
             </configuration>
           </execution>
