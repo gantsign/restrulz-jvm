@@ -38,3 +38,19 @@ branches:
   only:
     - master
     - /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)([\.\-].*)?$/
+
+env:
+  global:
+    # BINTRAY_USER
+    - secure: QA7D95EdrBWgnIv2bd94LTdDcB+7UDSyiCpIFEWKm1ED2k2Gt058xSeF2Y2+bQd0Dy+kJXoB8Jxvf4vQ5q3HzOqt8inkaunYd+KytgF25GUiYCAV/JUP+zb/3UD0odWP9FG0RBfRhCAC3G2Vjq+b94+i6OYYIGIU5+Z03lita89NNS310xVGKL3BOSNqUXBY32ulSrm1UDq1ec6Wru/fiYUN0DIHts8cwE5Qor0w6jKiY17nJtl7a2Jc8iQ6wnDu09hiboorYWd16IIZ/CDdQ4N0bHnWARBHM7HphM0o4wVw/OvRFZ+72sUkDNbbydb8XMK5Cf5MMN2Mn2HXSvf82EDh2UfdjTiW432OqdxY5RAsfndvfkq7QzqVV27b/HR/L3kiQ9i2gSnsG4oTdZVB01Q2Ro8ltaEF+bOaEJRsAo2R3967IVjIFSer9Bm0/WCQI6s8tKySRoTFOS+NS/196yFevxcDAz1xggabsOUavXcfytdv5FjwCnxAT4c4R1pOFPB5saxFjsngwuKEoCrbI6NI1fWvIanZl9M9iXJWMK1Barkr3GvXw9n1ufD2sv4Wb5MmXikkcap/+XieJEhk20+AgT61gaAh+i4ksLK2qIlgGwZ6nflw685ykoUgUmYHykcmvjp1g8361B270vCLtTVFRWZTxHetQzb1pg+zljw=
+    # BINTRAY_API_KEY
+    - secure: GNM2U9tVMqyTw8JBdANZnwKxnTKAU2AlfBogaUDKJwhMlfAbXh02oNnbpiwNGzzvF6kbXdlchmzZf0AWnhCyE7JLTFMKV4Mqozds1iw7tlypC+c/seYC74+qte/ZsJSxoQVlNICzOcy/3uSDUFySw6Z9SWfZ353zRci7XnNflxdF9sYuT+XLjJFkaq3MEj2lt6NFeEHJWWsa/NLw/Q7kYLpSH0FvnO+upjVNIjLQZdswF7H3mYI4xGSX0kM3h+z4FXWIAiAh+tigKGRBjWLCeyZkMqEPbKjttoU3r3znIhCw1O8ISFczzRK9hPR+ur6urt1gZHRb7lE7Zc74LmDuKV/S2RP5z5tPOG7vCvOy59fbaHN1rvWaPA+bFZindNARm8LY6zCpz7p5e1oT2v0h14MIrDGwW+D4OvTUbV9f4JvQDaK/C9Uiva2eUeGOciNDVjZlEDy5On+AJcijH65bwa68BgDki3FYM88VORg3GVC4BBd8J4SZKxETcsSV98t1LDthQFCQqALlxiG0nbHo5r0ANjfW+QdPt1/aMl7gRXNhtV7j/GcXs/pbT1/SqaKY3VbjpzC1K+qoI2K8ld/Fu9E3i/We1Bl0T/ehl+hCCnHu+rb0CgwuE2EcyL9eia4Q/X4VJFZlc8+59E5JqTiELqEX5XY9vLCCKbuettWhSuE=
+
+deploy:
+  provider: script
+  script: >
+    ./mvnw deploy --batch-mode --show-version --settings .travis/settings.xml
+        --activate-profiles publish-artifacts
+  on:
+    tags: true
+    repo: gantsign/restrulz-jvm
