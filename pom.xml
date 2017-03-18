@@ -40,7 +40,7 @@
   <properties>
     <dependencies.kotlin.version>1.1.1</dependencies.kotlin.version>
     <dependencies.spring-boot.version>1.5.1.RELEASE</dependencies.spring-boot.version>
-    <dependencies.spring.version>4.3.6.RELEASE</dependencies.spring.version>
+    <dependencies.spring.version>4.3.7.RELEASE</dependencies.spring.version>
     <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
