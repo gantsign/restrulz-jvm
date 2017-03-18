@@ -29,7 +29,7 @@ cache:
   directories:
     - $HOME/.m2
 
-script: ./mvnw clean source:jar install site --batch-mode --show-version
+script: ./mvnw clean source:jar dokka:javadocJar install site --batch-mode --show-version
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
@@ -48,7 +48,7 @@ env:
 
 deploy:
   provider: script
-  script: ./mvnw source:jar deploy --batch-mode --show-version --settings .travis/settings.xml --activate-profiles publish-artifacts
+  script: ./mvnw source:jar dokka:javadocJar deploy --batch-mode --show-version --settings .travis/settings.xml --activate-profiles publish-artifacts
   on:
     tags: true
     repo: gantsign/restrulz-jvm
