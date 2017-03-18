@@ -23,7 +23,7 @@
 
   <groupId>com.gantsign.restrulz</groupId>
   <artifactId>restrulz-parent</artifactId>
-  <version>0.9.1</version>
+  <version>0.9.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <prerequisites>
@@ -552,7 +552,7 @@
     <connection>scm:git:https://github.com/gantsign/restrulz-jvm.git</connection>
     <developerConnection>scm:git:git@github.com:gantsign/restrulz-jvm.git</developerConnection>
     <url>https://github.com/gantsign/restrulz-jvm</url>
-    <tag>0.9.1</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
