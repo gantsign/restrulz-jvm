@@ -38,9 +38,22 @@ abstract class JacksonObjectReader<out T> : JsonObjectReader<T> {
      * Returns an instance of the object using the property values in the JSON object literal.
      *
      * @param parser the parser to read properties from and record validation errors to.
+     * @return An instance of the object or `null` if an error occurs.
+     */
+    abstract fun readRequiredObject(parser: ValidationHandlingJsonParser): T?
+
+    /**
+     * Returns an instance of the object using the property values in the JSON object literal.
+     *
+     * @param parser the parser to read properties from and record validation errors to.
      * @return An instance of the object or `null` if the value is `null` or an error occurs.
      */
-    abstract fun readObject(parser: ValidationHandlingJsonParser): T?
+    fun readOptionalObject(parser: ValidationHandlingJsonParser): T? {
+        if (parser.currentToken() == JsonToken.VALUE_NULL) {
+            return null
+        }
+        return readRequiredObject(parser)
+    }
 
     override fun readObject(input: InputStream): T {
         val jsonFactory = JsonFactory()
@@ -48,12 +61,8 @@ abstract class JacksonObjectReader<out T> : JsonObjectReader<T> {
 
         parser.nextToken()
 
-        val result = readObject(parser)
-        if (parser.hasValidationFailures) {
-            throw ParseException(parser.validationFailureMessages)
-        }
+        val result = readRequiredObject(parser)
         if (result === null) {
-            parser.handleValidationFailure("Expected ${JsonToken.START_OBJECT} but was ${parser.currentToken()}")
             throw ParseException(parser.validationFailureMessages)
         }
         return result
@@ -64,16 +73,13 @@ abstract class JacksonObjectReader<out T> : JsonObjectReader<T> {
      * literal.
      *
      * @param parser the parser to read properties from and record validation errors to.
-     * @return A list of objects or `null` if the value is `null` or an error occurs.
+     * @return A list of objects or `null` if an error occurs.
      */
-    fun readArray(parser: ValidationHandlingJsonParser): List<T>? {
+    fun readRequiredArray(parser: ValidationHandlingJsonParser): List<T>? {
         // Sanity check: verify that we got "Json Array":
         when (parser.currentToken()) {
             null -> {
                 parser.handleValidationFailure("Expected ${JsonToken.START_ARRAY} but was EOF")
-                return null
-            }
-            JsonToken.VALUE_NULL -> {
                 return null
             }
             JsonToken.START_ARRAY -> {
@@ -93,7 +99,7 @@ abstract class JacksonObjectReader<out T> : JsonObjectReader<T> {
                     continue
                 }
 
-                val element = readObject(parser)
+                val element = readRequiredObject(parser)
 
                 if (element === null) {
                     continue
@@ -112,18 +118,28 @@ abstract class JacksonObjectReader<out T> : JsonObjectReader<T> {
         return mutableList.toList()
     }
 
+    /**
+     * Returns a list of instance of the object using the object literals contained in a JSON array
+     * literal.
+     *
+     * @param parser the parser to read properties from and record validation errors to.
+     * @return A list of objects or `null` if the value is `null` or an error occurs.
+     */
+    fun readOptionalArray(parser: ValidationHandlingJsonParser): List<T>? {
+        if (parser.currentToken() == JsonToken.VALUE_NULL) {
+            return null
+        }
+        return readRequiredArray(parser)
+    }
+
     override fun readArray(input: InputStream): List<T> {
         val jsonFactory = JsonFactory()
         val parser = ValidationHandlingJsonParser(jsonFactory.createParser(input))
 
         parser.nextToken()
 
-        val result = readArray(parser)
-        if (parser.hasValidationFailures) {
-            throw ParseException(parser.validationFailureMessages)
-        }
+        val result = readRequiredArray(parser)
         if (result === null) {
-            parser.handleValidationFailure("Expected ${JsonToken.START_ARRAY} but was ${parser.currentToken()}")
             throw ParseException(parser.validationFailureMessages)
         }
         return result

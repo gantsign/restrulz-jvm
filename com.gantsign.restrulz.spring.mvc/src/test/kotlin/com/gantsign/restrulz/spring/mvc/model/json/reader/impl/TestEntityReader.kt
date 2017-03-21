@@ -32,12 +32,9 @@ object TestEntityReader : JacksonObjectReader<TestEntity>() {
     private val log: Logger = LoggerFactory.getLogger(TestEntityReader::class.java)
     private val idIndex: Int = 0
 
-    override fun readObject(parser: ValidationHandlingJsonParser): TestEntity? {
+    override fun readRequiredObject(parser: ValidationHandlingJsonParser): TestEntity? {
         val startObject = parser.currentToken()
         when (startObject) {
-            JsonToken.VALUE_NULL -> {
-                return null
-            }
             JsonToken.START_OBJECT -> {
                 // continue
             }
