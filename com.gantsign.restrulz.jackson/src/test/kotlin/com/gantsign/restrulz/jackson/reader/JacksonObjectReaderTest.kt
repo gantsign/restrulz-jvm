@@ -30,6 +30,7 @@ import java.io.InputStream
 import java.nio.charset.StandardCharsets.UTF_8
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class JacksonObjectReaderTest {
@@ -40,6 +41,26 @@ class JacksonObjectReaderTest {
 
     fun String.toInputStream(): InputStream {
         return ByteArrayInputStream(this.toByteArray(UTF_8))
+    }
+
+    @Test
+    fun testReadOptionalObject() {
+        val jsonFactory = JsonFactory()
+        val parser = ValidationHandlingJsonParser(jsonFactory.createParser("{}"))
+        parser.nextToken()
+
+        val empty: Empty? = EmptyReader.readOptionalObject(parser)
+        assertNotNull(empty)
+    }
+
+    @Test
+    fun testReadOptionalObjectWithNull() {
+        val jsonFactory = JsonFactory()
+        val parser = ValidationHandlingJsonParser(jsonFactory.createParser("null"))
+        parser.nextToken()
+
+        val empty: Empty? = EmptyReader.readOptionalObject(parser)
+        assertNull(empty)
     }
 
     @Test
@@ -65,6 +86,26 @@ class JacksonObjectReaderTest {
     }
 
     @Test
+    fun testReadOptionalArray() {
+        val jsonFactory = JsonFactory()
+        val parser = ValidationHandlingJsonParser(jsonFactory.createParser("[{}]"))
+        parser.nextToken()
+
+        val list: List<Empty>? = EmptyReader.readOptionalArray(parser)
+        assertNotNull(list)
+    }
+
+    @Test
+    fun testReadOptionalArrayWithNull() {
+        val jsonFactory = JsonFactory()
+        val parser = ValidationHandlingJsonParser(jsonFactory.createParser("null"))
+        parser.nextToken()
+
+        val list: List<Empty>? = EmptyReader.readOptionalArray(parser)
+        assertNull(list)
+    }
+
+    @Test
     fun testReadArrayFromStream() {
         val values: List<Empty> = EmptyReader.readArray("[{},{}]".toInputStream())
         assertEquals(expected = 2, actual = values.size)
@@ -77,7 +118,7 @@ class JacksonObjectReaderTest {
 
         parser.nextToken()
 
-        EmptyReader.readArray(parser)
+        EmptyReader.readRequiredArray(parser)
 
         assertTrue(parser.hasValidationFailures)
         assertEquals(

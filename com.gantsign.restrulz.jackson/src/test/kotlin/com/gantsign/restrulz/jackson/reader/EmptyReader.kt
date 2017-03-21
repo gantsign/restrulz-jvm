@@ -24,13 +24,10 @@ import com.gantsign.restrulz.jackson.Empty
 
 object EmptyReader : JacksonObjectReader<Empty>() {
 
-    override fun readObject(parser: ValidationHandlingJsonParser): Empty? {
+    override fun readRequiredObject(parser: ValidationHandlingJsonParser): Empty? {
         // Sanity check: verify that we got "Json Object":
         val startObject = parser.currentToken()
         when (startObject) {
-            JsonToken.VALUE_NULL -> {
-                return null
-            }
             JsonToken.START_OBJECT -> {
                 // continue
             }
