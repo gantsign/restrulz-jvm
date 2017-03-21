@@ -94,10 +94,6 @@ abstract class JacksonObjectReader<out T> : JsonObjectReader<T> {
         val mutableList: MutableList<T> = mutableListOf()
         try {
             while (parser.nextToken() !== JsonToken.END_ARRAY) {
-                if (parser.currentToken === JsonToken.VALUE_NULL) {
-                    parser.handleValidationFailure("Expected ${JsonToken.START_OBJECT} but was ${parser.currentToken}")
-                    continue
-                }
 
                 val element = readRequiredObject(parser)
 
