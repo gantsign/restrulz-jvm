@@ -69,6 +69,15 @@ abstract class JacksonObjectReader<out T> : JsonObjectReader<T> {
     }
 
     /**
+     * Null-safe `toString()` method for [JsonToken] where `null` is assumed to represent EOF.
+     *
+     * @return `EOF` if [JsonToken] is `null` otherwise [JsonToken.toString].
+     */
+    protected fun JsonToken?.toString(): String {
+        return if (this === null) "EOF" else this.toString()
+    }
+
+    /**
      * Returns a list of instance of the object using the object literals contained in a JSON array
      * literal.
      *
@@ -76,19 +85,14 @@ abstract class JacksonObjectReader<out T> : JsonObjectReader<T> {
      * @return A list of objects or `null` if an error occurs.
      */
     fun readRequiredArray(parser: ValidationHandlingJsonParser): List<T>? {
-        // Sanity check: verify that we got "Json Array":
-        when (parser.currentToken()) {
-            null -> {
-                parser.handleValidationFailure("Expected ${JsonToken.START_ARRAY} but was EOF")
-                return null
-            }
-            JsonToken.START_ARRAY -> {
-                // continue
-            }
-            else -> {
-                parser.handleValidationFailure("Expected ${JsonToken.START_ARRAY} but was ${parser.currentToken()}")
-                return null
-            }
+
+        val startToken: JsonToken? = parser.currentToken()
+
+        // Sanity check: verify that we have a JSON array
+        if (startToken != JsonToken.START_ARRAY) {
+            parser.handleValidationFailure(
+                    "Expected ${JsonToken.START_ARRAY} but was ${startToken.toString()}")
+            return null
         }
 
         val mutableList: MutableList<T> = mutableListOf()
