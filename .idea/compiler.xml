@@ -17,7 +17,7 @@
       <module name="com.gantsign.restrulz.json" target="1.8" />
       <module name="com.gantsign.restrulz.spring.mvc" target="1.8" />
       <module name="com.gantsign.restrulz.validation" target="1.8" />
-      <module name="restrulz-parent" target="1.8" />
+      <module name="restrulz-jvm" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
