@@ -23,7 +23,7 @@
 
   <parent>
     <groupId>com.gantsign.restrulz</groupId>
-    <artifactId>restrulz-parent</artifactId>
+    <artifactId>restrulz-jvm</artifactId>
     <version>0.9.5-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
