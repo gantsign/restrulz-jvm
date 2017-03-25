@@ -22,13 +22,13 @@ package com.gantsign.restrulz.util.string
 /**
  * Returns this String if the string is non-null and non-blank otherwise returns empty string.
  */
-fun String?.blankToEmpty(): String {
+fun String?.blankOrNullToEmpty(): String {
     return if (this === null || this.isBlank()) "" else this
 }
 
 /**
- * Returns a new list where all the items in this list are mapped with [blankToEmpty].
+ * Returns a new list where all the items in this list are mapped with [blankOrNullToEmpty].
  */
-fun List<String>.blankToEmpty(): List<String> {
-    return this.map(String::blankToEmpty)
+fun List<String>.blankOrNullToEmpty(): List<String> {
+    return this.map(String::blankOrNullToEmpty)
 }

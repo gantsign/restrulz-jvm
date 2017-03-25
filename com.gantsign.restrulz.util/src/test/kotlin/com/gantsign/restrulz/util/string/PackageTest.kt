@@ -26,41 +26,41 @@ import kotlin.test.assertEquals
 class PackageTest {
 
     @Test
-    fun testStringBlankToEmptyWithNonBlank() {
+    fun testStringBlankOrNullToEmptyWithNonBlank() {
         val expected = "a"
-        val actual = expected.blankToEmpty()
+        val actual = expected.blankOrNullToEmpty()
 
         assertSame(expected, actual)
     }
 
     @Test
-    fun testStringBlankToEmptyWithBlank() {
+    fun testStringBlankOrNullToEmptyWithBlank() {
         val expected = ""
-        val actual = " ".blankToEmpty()
+        val actual = " ".blankOrNullToEmpty()
 
         assertEquals(expected, actual)
     }
 
     @Test
-    fun testStringBlankToEmptyWithNull() {
+    fun testStringBlankOrNullToEmptyWithNull() {
         val expected = ""
-        val actual = (null as String?).blankToEmpty()
+        val actual = (null as String?).blankOrNullToEmpty()
 
         assertEquals(expected, actual)
     }
 
     @Test
-    fun testListBlankToEmptyWithNonBlank() {
+    fun testListBlankOrNullToEmptyWithNonBlank() {
         val expected = listOf("a")
-        val actual = expected.blankToEmpty()
+        val actual = expected.blankOrNullToEmpty()
 
         assertEquals(expected, actual)
     }
 
     @Test
-    fun testListBlankToEmptyWithBlank() {
+    fun testListBlankOrNullToEmptyWithBlank() {
         val expected = listOf("")
-        val actual = listOf(" ").blankToEmpty()
+        val actual = listOf(" ").blankOrNullToEmpty()
 
         assertEquals(expected, actual)
     }
